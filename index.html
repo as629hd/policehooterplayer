@@ -64,7 +64,6 @@ const audio = document.getElementById("hooter");
 const button = document.querySelector("button");
 const volumeSlider = document.getElementById("volume");
 
-let isPlaying = false;
 let activated = false;
 
 audio.volume = 0.5;
@@ -73,25 +72,23 @@ volumeSlider.addEventListener("input", () => {
     audio.volume = volumeSlider.value;
 });
 
-function toggleSound() {
+function playFromStart() {
     activated = true;
-
-    if (!isPlaying) {
-        audio.play();
-        button.textContent = "STOP HOOTER";
-    } else {
-        audio.pause();
-        audio.currentTime = 0;
-        button.textContent = "PLAY HOOTER";
-    }
-    isPlaying = !isPlaying;
+    audio.pause();
+    audio.currentTime = 0;
+    audio.play();
+    button.textContent = "STOP HOOTER";
 }
 
-document.addEventListener("keydown", (e) => {
-    if (!activated) return;
+// Button click
+function toggleSound() {
+    playFromStart();
+}
 
+// Keyboard (L)
+document.addEventListener("keydown", (e) => {
     if (e.key.toLowerCase() === "l") {
-        toggleSound();
+        playFromStart();
     }
 });
 </script>
